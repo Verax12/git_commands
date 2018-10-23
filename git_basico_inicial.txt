@@ -1,0 +1,76 @@
+Comandos Basicos do GIT:
+
+Todas informações retiradas de:
+https://git-scm.com/book/pt-br/v1/
+
+
+Git Clone:
+Você pode obter um projeto Git utilizando um diretório existente e o importa para o Git. 
+git clone nome.do.usuario@ipdoservidor:/caminho/do/arquivo
+ex: william.gontijo.dpmg@10.26.4.10:/var/www/casa_dev
+
+Pull
+Para puxar modificações para o seu projeto local, utilizar os comandos:
+$ git pull <servidor> <branch>
+ex: git pull origin master;
+
+
+Status
+Você realizou seus trabalhos, e agora precisa subir os arquivos para o servidor
+Você primeiramente precisa utilizar o:
+$ git status
+
+ele retornará uma tela mostrando para você oque está de diferente do seu projeto local e do seu repositorio remoto, no nosso exemplo o Origin Master
+
+Para subir as alterações você precisará de três comandos basicos:
+git add 
+git commit -m ""
+git push
+
+Add
+para selecionar os arquivos que você quer subir, utilizar o git add:
+$git add <caminho e nome dos arquivos>
+ex:
+$ git add /app/Controller/index.php
+caso você queira adicionar todos os arquivos que o git status te retornou, utilizar o :
+$git add .
+
+Commit
+após isso, se você utilizar novamente o git status, a cor dos arquivos irá mudar de vermelho para verde, e agora é a hora de você commitar, para isso utilize:
+$git commit -m "seu texto aqui"
+ex:
+$git commit -m "Corrigindo botão na index"
+
+finalizando o commit agora é hora de subir para o seu servidor.
+
+Push
+agora com seu commit finalizado é hora de subir para o seu servidor.
+PS: Utilize o comando git pull antes de subir as suas modificações  para evitar conflitos.
+$git push <servidor> <branch>
+ex:
+$git push origin master
+
+Trabalhando com Branchs:
+Branchs são forks do seu master.
+Para mais detalhes ler : https://git-scm.com/book/pt-br/v1/Ramifica%C3%A7%C3%A3o-Branching-no-Git-B%C3%A1sico-de-Branch-e-Merge
+
+É recomendado sempre utilizar um branch quando for realizar alguma modificação no sistema. 
+PS.:Lembre-se sempre de dar um Pull do seu servidor antes de criar uma Branch
+Utilize o comando:
+$git checkout -t <"nomeDaSuaBranch">
+$git checkout -t "branchTeste"
+
+Siga a convenção e utilize sempre a primeira letra da primeira palava minuscula e a primeira letra das proximas maiuscula.
+
+Branch criada com sucesso.
+
+checkout
+para alternar entre as branchs utilize o comando
+$git checkou <"nome da branch">
+$git checkout master
+
+
+LOG
+
+Para verificar os commits realizados naquele projeto utilize o comando:
+$git log

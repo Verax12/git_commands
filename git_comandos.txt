@@ -1,0 +1,169 @@
+Com o intuito de reforçar os conhecimentos sobre git na aplicação do Sistema da Defensoria, segue lista dos comandos mais utilizados:
+Adicionei um commit sem querer :-\, como tirar ele do repositório?
+
+1º Passo)
+#!php git reset --soft HEAD^ -> Onde ^ é o número de commit's que deseja voltar.
+Este passo retira o commit do HEAD online no bitbucket, porém não o apaga do repositório.
+Ex: #!php $git reset --soft HEAD~2
+
+2º Passo)
+#!php git push origin HEAD --force -> Este passo atualiza o HEAD do repositório excluindo permanentemente o commit do 1º passo excluído.
+
+3º Passo)
+#!php git rebase --onto <nome_do_branch>~^_a_remover <nome_do_branch>~^_a_ser_mantido <nome_do_branch> -> Este passo serve para remover um commit específico. Obs.: ^ é a posição do commit.
+
+Remover o commit 5.
+Ex: #!php $git rebase --onto master~5 master~4 master
+
+Foi identificado um bug no sistema :-(, como voltar um commit anterior?
+1º Passo) #!php git reset --hard <ID_COMMIT> No qual deseja voltar. Este passo altera o ramos para o #!php ID_COMMIT,
+para que seja visualizada a alteração que houve.
+
+2º Passo) #!php git push origin HEAD --force -> Caso seja necessário atualizar o HEAD do repositório para manter
+a integridade do sistema.
+
+Acabei de atualizar o projeto, E apareceu a mensagem de MERGE; o que eu faço?
+1º Passo)
+#!php git reset --merge <ORIG_HEAD> hash que foi gerado para o merge -> Neste caso você está desfazendo o merge e por padrão seu projeto fica
+sem apontar para um HEAD.
+
+2º Passo)
+#!php git checkout <NOME_DO_REPOSITÓRIO> -> Neste passo você aponta para o cabeçalho atual do seu repositório
+
+3º Passo)
+#!php git status -> Verifique se voltou para o estado antes do MERGE. Se positivo proceda com suas alterações. Caso contrário aplicar os próximos
+passos.
+
+4º Passo)
+#!php git reset --hard <ID_COMMIT> No qual deseja voltar. Este passo altera o ramos para o #!php ID_COMMIT,
+para fazer o projeto voltar ao estado no qual funcionava.
+
+5º Passo)
+#!php git push origin HEAD --force -> Caso seja necessário atualizar o HEAD do repositório para manter
+a integridade do sistema.
+
+Criei um novo branch, como faço para evitar que o git entenda uma mudança de permissão no diretório como alteração?
+1º Passo)### #!php git config --global core.filemode false -> Este comando altera as configurações para todos os usuários do sistema.
+2º Passo)### #!php git config core.filemode false -> Este comando altera apenas para o usuário corrente.
+Não configurei meu arquivo .gitignore, e preciso tirar um arquivo de monitoramento; o que eu faço?
+Por padrão quando você altera um arquivo, o git ativa o bit que diz que o arquivo não é mais o 
+mesmo desde o último commit. Isso fará que o arquivo apareça na listagem de modificações, 
+através do git status.
+
+1º Passo)### #!php git update-index --assume-unchanged <NOME_DO_ARQUIVO> -> Este comando é para remover da listagem.
+Você ainda pode utilizar este método, caso o primeiro passo não funcione.
+
+2º Passo)### Crie uma cópia do arquivo por exemplo: #!php config com o nome #!php config.default
+3º Passo)### #!php git rm -r --cached <NOME_DO_ARQUIVO> ou #!php<NOME_DA_PASTA/*> -> Este comando limpa da lista de monitoramento do git e do cache.
+4º Passo)### Adicione os arquivos e commit, logo em seguida proceda com o comando #!php push e #!php pull.
+Como remover um branch local e remoto
+Local:
+  ###1º Passo)### ``` #!php git branch -D <NOME_DO_BRANCH>```
+Remoto:
+  ###1º Passo)### ``` #!php git branch -r -d <NOME_DO_REPOSITÓRIO>/<NOME_DO_BRANCH> ```-> Este comando deve ser utilizado nesta sequência, pois no tutorial
+git site está invertido e conduz ao erro. Já no tutorial terminal consta como está aqui.
+
+Supondo que não funcione o primeiro passo, prossiga com o segundo, caso contrário parabéns! Você conseguiu.
+
+  ###2º Passo)### ``` #!php git push origin :<NOME_DO_BRANCH>```
+
+            exemplo: ``` #!php git push origin :copiaMaster```
+Quero visualizar remotamente os gráficos de logs do git sem o gitk, como eu faço?
+1º Passo)### #!php git config --global alias.graph "log --graph --all --pretty=format:'%Cred%h%Creset - %Cgreen(%cr)%Creset %s%C(yellow)%d%Creset' --abbrev-commit --date=relative"
+Este comando configura o gráfico remoto para que seja visualizado através do terminal.
+
+Okay, agora vamos a alguns comandos comuns!
+Quero listar os últimos N commits, como faço?##
+
+1º Passo)### #!php git log -<size> -> Onde size é a quantidade que você deseja listar.
+Exemplo: #!php git log -5
+
+2º Passo)### #!php git rev-list -n <size> HEAD -> Neste comando você lista somente os hash, sem opção de
+visualizar autor, comentários, etc... Observação size é a quantidade que você deseja listar.
+Exemplo: #!php git rev-list -n 3 HEAD
+Resultado:
+8d14d7...
+480115...
+6cf26b...
+
+Saiba o básico de GIT, e seja um expert! :-;
+1º Passo)### #!php git status -> Comando que lista todas as modificações no branch switado
+2º Passo)### #!php git add -> Comando que prepara as alterações para o commit e o envio para o repositório remoto.
+Este comando pode ser acompanhado do (.) ou do (*) símbolo que define todos.
+Exemplo: #!php git add . ou #!php git add *
+
+3º Passo)### #!php git commit -m "Menssagem" -> Comando que prepara o arquivo alterado e adicionado para o envio para
+o repositório remoto. Esse comando pode ser combinado com o git add.
+
+Exemplo: #!php git commit -a -m "Mensagem" -> onde -a é uma short tag para add e -m para message.
+O comando commit também pode ser utilizado em conjunto com a tag --amend. Isso significa que, se você
+adicionou um arquivo logo em seguida de um commit, você poderá utilizar o último commit para não poluir 
+a documentação do git.
+
+Exemplo: #!php git commit --amend -> isso equivale ao tópico adicionei um commit sem querer!
+
+        ``` #!php git reset --soft HEAD^```
+        ``` #!php git checkout <NOME_DO_ARQUIVO>``` -> Faça as alterações e logo em seguida commit.
+        ``` #!php git commit -c ORIG_HEAD ```
+4º Passo)### #!php git push <NOME_DO_REPOSITÓRIO>/<NOME_DO_BRANCH> -> Este comando envio para o repositório do git remoto as alterações realizadas e comitadas
+em um determinado arquivo.
+
+      Exemplo: ``` #!php git push origin/master```
+5º Passo)### #!php git pull <NOME_DO_REPOSITÓRIO>/<NOME_DO_BRANCH> -> Este comando baixo do repositório remoto as alterações realizadas e comitadas em um
+determinado arquivo atualizando o seu projeto local.
+
+      Exemplo: ``` #!php git pull origin/master```
+6º Passo)### #!php git branch -> Este comando lista todos os branch locais. Também pode-se utilizar em conjunto com a tag -r que é uma short tag para remote.
+      Exemplo: ``` #!php git branch -r```
+      Resultado:
+                origin/HEAD -> origin/master
+                origin/exemplo
+7º Passo)### #!php git stash -> Este comando serve para você colocar os arquivos em uma memoria temporária para que não sejam adicionados em um evetual
+#!php git add ou #!php git pull. Também pode-se utilizar em conjunto com as tags: list, apply, drop, pop.
+
+      * list -> Lista os cabeçalhos colocados em um array de stash.
+             exemplo: stash@{0} - Merge bla bla bla...
+
+      * apply -> Aplica um stash selecionado, retornando os arquivos da memoria temporária para o projeto.
+             exemplo: git stash apply stash@{0}
+
+      * drop -> Remove um stash especifico da lista.
+
+      * pop -> Aplica e remove ao mesmo tempo um stash da lista.
+Estou com Problemas de permissão de leitura na pasta .git, como resolver?
+1º Passo)### Set as permissões de grupo para . com o comando:
+#!php sudo chown www-data:www-data /var/www/<NOME_REPOSITÓRIO>/.git/ -Rf
+
+2º Passo)### Set as permissões de acesso para . com o comando:
+#!php sudo chmod ug+w /var/www/<NOME_REPOSITÓRIO>/.git/ -Rf
+
+3º Passo)### Você precisa definir a pasta .git como compartilhada
+#!php git config core.sharedRepository group
+
+4º Passo)### Se de tudo não funcionar os passos acima pode também setar as configurações para o diretório com o comando:
+#!php find . -type d -exec chmod g+s '{}' +
+
+Outra Forma de resolver:
+1º Passo)### Navegue até o repositório do Projeto: #!php /var/www/<NOME_REPOSITÓRIO>/
+2º Passo)### Set as permissões de grupo, com o comando:
+#!php chgrp -R www-data .
+
+3º Passo)### Set as permissões de acesso com o comando:
+#!php chmod -R g+rwX .
+
+4º Passo)### Set as configurações para o diretório com o comando:
+#!php find . -type d -exec chmod g+s '{}' +
+
+Fez uma cagada em um commit específico? Ainda mais em produção?! PUTZZZZ!! =(
+Como não é aconselhável apagar um registro do log, vamos fazer uso do git revert
+
+1) Realizar o comando git-revert
+git revert --strategy resolve <commit>
+Após isso mostrará uma mensagem com os arquivos alterados daquele commit e com uma mensagem padrão que ocorrerá dessa alteração, que é de reverter.
+
+com os comandos básicos de edição de texto do linux em terminal, salve e dê um novo push naquele branch
+
+2) Suba para o branch a atualização
+git push origin <branch de alteração>
+3) KIS (Keep it simple)
+Be happy! =D
